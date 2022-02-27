@@ -36,10 +36,13 @@ def expm(x):
 def _adjoint(_ans, x, fn):
     vectorized = x.ndim == 3
     axes = (0, 2, 1) if vectorized else (1, 0)
+    x = getattr(x, "_value", x)
 
     def vjp(g):
         n = x.shape[-1]
         size_m = x.shape[:-2] + (2 * n, 2 * n)
+        g = getattr(g, "_value", g)
+
         mat = np.zeros(size_m)
         mat[..., :n, :n] = x.transpose(axes)
         mat[..., n:, n:] = x.transpose(axes)
