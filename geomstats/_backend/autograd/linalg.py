@@ -92,13 +92,13 @@ def solve_sylvester(a, b, q):
                 tilde_x = tilde_q / (eigvals[..., :, None] + eigvals[..., None, :])
                 return eigvecs @ tilde_x @ np.transpose(eigvecs, axes)
 
-    return np.vectorize(
-        scipy.linalg.solve_sylvester, signature="(m,m),(n,n),(m,n)->(m,n)"
-    )(a, b, q)
+    return np.vectorize(asp.solve_sylvester, signature="(m,m),(n,n),(m,n)->(m,n)")(
+        a, b, q
+    )
 
 
 def sqrtm(x):
-    return np.vectorize(scipy.linalg.sqrtm, signature="(n,m)->(n,m)")(x)
+    return np.vectorize(asp.sqrtm, signature="(n,m)->(n,m)")(x)
 
 
 def quadratic_assignment(a, b, options):
